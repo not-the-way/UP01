@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using UP01.Models;
 
 namespace UP01.ViewModels
 {
-    public class UsersVM : BaseViewModel
+    public class AuthWindowVM : BaseViewModel
     {
         public Users currentUser;
 
@@ -65,7 +66,7 @@ namespace UP01.ViewModels
         {
             get
             {
-                return _loginCommand ?? (_loginCommand = new RelayCommand(GuestLogin));
+                return _guestLoginCommand ?? (_guestLoginCommand = new RelayCommand(GuestLogin));
             }
         }
 

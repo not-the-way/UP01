@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UP01"
         xmlns:vm="clr-namespace:UP01.ViewModels"
+        xmlns:hlp="clr-namespace:UP01.Helpers"
         mc:Ignorable="d" Icon="/Images/icon.ico"
         Title="AuthWindow" Height="500" Width="600">
 
     <Window.DataContext>
-        <vm:UsersVM/>
+        <vm:AuthWindowVM/>
     </Window.DataContext>
     
     <Grid>
@@ -35,7 +36,7 @@
                    HorizontalAlignment="Left" VerticalAlignment="Bottom"
                    FontSize="16"/>
             <TextBox Grid.Row="1" Style="{StaticResource MainTextBoxStyle}"
-                     Text="{Binding CurrentUser.Login}"/>
+                     Text="{Binding CurrentUser.Login, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
 
         <Grid Grid.Row="2" Margin="50, 40">
@@ -47,7 +48,8 @@
             <Label Content="Пароль" Style="{StaticResource MainLabelStyle}"
                    HorizontalAlignment="Left" VerticalAlignment="Bottom"
                    FontSize="16"/>
-            <PasswordBox Grid.Row="1" Password="{Binding CurrentUser.Password}"/>
+            <PasswordBox Grid.Row="1" hlp:PasswordBoxHelper.BoundPassword="{Binding CurrentUser.Password,
+                                      Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
 
         <Button Command="{Binding CommandLogin}" Grid.Row="3"

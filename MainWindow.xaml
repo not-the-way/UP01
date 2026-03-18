@@ -4,10 +4,121 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UP01"
+        xmlns:vm="clr-namespace:UP01.ViewModels"
         mc:Ignorable="d" Icon="/Images/icon.ico"
         Title="Главное окно" Height="450" Width="800">
+
+    <Window.DataContext>
+        <vm:MainWindowVM/>
+    </Window.DataContext>
     
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.6*"/>
+            <RowDefinition Height="1.7*"/>
+            <RowDefinition/>
+            <RowDefinition Height="0.4*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Image Source="/Images/icon.JPG" Grid.Column="0" Grid.Row="0"/>
+
+        <Label Content="MegaToyShop" Style="{StaticResource MainLabelStyle}"
+               Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
+               Margin="5, 0, 0, 0" HorizontalAlignment="Left" FontSize="40"/>
+
+        <Label Content="{Binding UserFullName}"
+               Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="2" HorizontalAlignment="Right"
+               VerticalAlignment="Top" x:Name="UsernameLabel"
+               Style="{StaticResource MainLabelStyle}" FontSize="16"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1"
+                    Grid.ColumnSpan="3" Margin="10">
+            <Button Style="{StaticResource MainButtonStyle}"
+                    Content="Добавить товар"
+                    HorizontalAlignment="Left"
+                    FontSize="20" Margin="5, 0"
+                    x:Name="AddButton" Command="{Binding CommandAddProduct}"/>
+
+            <Button Style="{StaticResource MainButtonStyle}"
+                    Content="Изменить товар"
+                    HorizontalAlignment="Left"
+                    FontSize="20"
+                    Margin="5, 0"
+                    x:Name="EditButton" Command="{Binding CommandEditProduct}"/>
+
+            <Button Style="{StaticResource MainButtonStyle}"
+                    Content="Удалить товар"
+                    HorizontalAlignment="Left"
+                    FontSize="20"
+                    Margin="5, 0"
+                    x:Name="DeleteButton" Command="{Binding CommandDeleteProduct}"/>
+        </StackPanel>
+
+        <Button Content="Выход" Grid.Column="3"
+                Grid.Row="0" Style="{StaticResource MainButtonStyle}"
+                VerticalAlignment="Center" HorizontalAlignment="Right"
+                Margin="5" FontSize="20" x:Name="ExitButton" Command="{Binding CommandExit}"/>
+
+        <!--Область отображения данных-->
+        <Border Grid.Row="2" Grid.ColumnSpan="4" Grid.RowSpan="2"
+                CornerRadius="5" Background="Transparent"
+                BorderBrush="Black" Margin="5, 0" BorderThickness="1">
+            <ListView x:Name="ItemListView" HorizontalContentAlignment="Stretch"
+                      ItemsSource="{Binding ProductsList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border CornerRadius="5" Background="#7FFF00" BorderBrush="Black"
+                                BorderThickness="1" HorizontalAlignment="Stretch">
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="5*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Source="{Binding Image}" Width="150" Height="150" Margin="5" Grid.Column="0"/>
+                                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="5">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding ProductCategory}"/>
+                                        <TextBlock Text=" | "/>
+                                        <TextBlock Text="{Binding ProductName}"/>
+                                    </StackPanel>
+
+                                    <TextBlock Text="{Binding Description, StringFormat={}Описание: {0}}"/>
+                                    <TextBlock Text="{Binding Manufacturer, StringFormat={}Производитель: {0}}"/>
+                                    <TextBlock Text="{Binding Deliverer, StringFormat={}Поставщик: {0}}"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Цена: "/>
+                                        <TextBlock TextDecorations="{Binding DiscountDecor}"
+                                                   Foreground="{Binding TextColor}"
+                                                   Text="{Binding Price}"/>
+                                        <TextBlock Text=" "/>
+                                        <TextBlock Text="{Binding DiscountPrice}"/>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding EdIzm, StringFormat={}Единица измерения: {0}}"/>
+                                    <TextBlock Text="{Binding AmountStored, StringFormat={}Количество на складе: {0}}"
+                                               Foreground="{Binding AmountColor}"/>
+                                </StackPanel>
+
+                                <Border Grid.Column="2" Margin="5" CornerRadius="4" BorderThickness="1" BorderBrush="Black"
+                                        Background="{Binding BackColor}">
+                                    <TextBlock Text="{Binding CurrentDiscount, StringFormat={}Скидка: {0}%}"
+                                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </Border>
     </Grid>
 </Window>
