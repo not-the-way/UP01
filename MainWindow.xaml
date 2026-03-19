@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:UP01"
         xmlns:vm="clr-namespace:UP01.ViewModels"
         mc:Ignorable="d" Icon="/Images/icon.ico"
-        Title="Главное окно" Height="450" Width="800">
+        Title="Главное окно" Height="550" Width="1000">
 
     <Window.DataContext>
         <vm:MainWindowVM/>
@@ -34,9 +34,9 @@
                Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
                Margin="5, 0, 0, 0" HorizontalAlignment="Left" FontSize="40"/>
 
-        <Label Content="{Binding UserFullName}"
+        <Label Content="{Binding UserFullName, StringFormat=ФИО: {0}}"
                Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="2" HorizontalAlignment="Right"
-               VerticalAlignment="Top" x:Name="UsernameLabel"
+               VerticalAlignment="Top" x:Name="UsernameLabel" Margin="15"
                Style="{StaticResource MainLabelStyle}" FontSize="16"/>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1"
@@ -63,7 +63,7 @@
         </StackPanel>
 
         <Button Content="Выход" Grid.Column="3"
-                Grid.Row="0" Style="{StaticResource MainButtonStyle}"
+                Grid.Row="4" Style="{StaticResource MainButtonStyle}"
                 VerticalAlignment="Center" HorizontalAlignment="Right"
                 Margin="5" FontSize="20" x:Name="ExitButton" Command="{Binding CommandExit}"/>
 
@@ -75,16 +75,16 @@
                       ItemsSource="{Binding ProductsList}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Border CornerRadius="5" Background="#7FFF00" BorderBrush="Black"
-                                BorderThickness="1" HorizontalAlignment="Stretch">
-                            <Grid HorizontalAlignment="Stretch">
+                        <Border CornerRadius="5" Background="#F5DEB3" BorderBrush="Black"
+                                BorderThickness="1">
+                            <Grid HorizontalAlignment="Left">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width="5*"/>
                                     <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="5*"/>
+                                    <ColumnDefinition Width="3*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Image Source="{Binding Image}" Width="150" Height="150" Margin="5" Grid.Column="0"/>
+                                <Image Source="{Binding Image}" Width="150" Height="150" Grid.Column="0"/>
                                 <StackPanel Orientation="Vertical" Grid.Column="1" Margin="5">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="{Binding ProductCategory}"/>
@@ -92,14 +92,15 @@
                                         <TextBlock Text="{Binding ProductName}"/>
                                     </StackPanel>
 
-                                    <TextBlock Text="{Binding Description, StringFormat={}Описание: {0}}"/>
+                                    <TextBlock Text="{Binding Description, StringFormat={}Описание: {0}}"
+                                               TextWrapping="Wrap"/>
                                     <TextBlock Text="{Binding Manufacturer, StringFormat={}Производитель: {0}}"/>
                                     <TextBlock Text="{Binding Deliverer, StringFormat={}Поставщик: {0}}"/>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Цена: "/>
                                         <TextBlock TextDecorations="{Binding DiscountDecor}"
                                                    Foreground="{Binding TextColor}"
-                                                   Text="{Binding Price}"/>
+                                                   Text="{Binding Cost}"/>
                                         <TextBlock Text=" "/>
                                         <TextBlock Text="{Binding DiscountPrice}"/>
                                     </StackPanel>

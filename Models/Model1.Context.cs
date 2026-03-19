@@ -32,7 +32,6 @@ namespace UP01.Models
         public virtual DbSet<OrderStatuses> OrderStatuses { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ProductCategories> ProductCategories { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<UserRoles> UserRoles { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<OrderComposition> OrderComposition { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using UP01.Models;
+using UP01.ViewModels;
 
 namespace UP01.ViewModels
 {
@@ -18,7 +18,24 @@ namespace UP01.ViewModels
         private ICommand _commandEditProduct;
         private ICommand _commandDeleteProduct;
         private string _userFullName;
-        private IList<Product> _products;
+        private IList<ProductDisplay> _products;
+
+        public MainWindowVM(string userFullName)
+        {
+            if (userFullName == string.Empty)
+            {
+                UserFullName = "ГОСТЕВАЯ УЧЁТНАЯ ЗАПИСЬ";
+            }
+            else
+            {
+                UserFullName = userFullName;
+            }
+        }
+
+        public MainWindowVM()
+        {
+
+        }
 
         public string UserFullName
         {
@@ -30,7 +47,23 @@ namespace UP01.ViewModels
             }
         }
 
-        public IList<Product> ProductsList => _products ?? (_products = new ObservableCollection<Product>());
+        public IList<ProductDisplay> ProductsList
+        {
+            get
+            {
+                if (_products == null)
+                {
+                    _products = new ObservableCollection<ProductDisplay>();
+                    LoadProducts();
+                }
+                return _products;
+            }
+            set
+            {
+                _products = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ICommand CommandExit
         {
@@ -52,6 +85,14 @@ namespace UP01.ViewModels
             get { return _commandDeleteProduct ?? (_commandDeleteProduct = new RelayCommand(DeleteProduct)); }
         }
 
+        void LoadProducts()
+        {
+            foreach (var item in db.Product.ToList())
+            {
+                ProductsList.Add(new ProductDisplay(item));
+            }
+        }
+
         void AddProduct()
         {
             ProductAddEditWindow add = new ProductAddEditWindow();
@@ -71,7 +112,7 @@ namespace UP01.ViewModels
 
         void Exit()
         {
-            MainWindow main = new MainWindow();
+            var main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
             AuthWindow auth = new AuthWindow();
 
             auth.Show();

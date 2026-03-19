@@ -17,9 +17,17 @@ namespace UP01.ViewModels
             _product = product;
         }
 
+        public string Article => _product.Article;
+        public string ProductName => _product.ProductName;
+        public string EdIzm => _product.EdIzm;
         public double Cost => _product.Cost;
+        public string Deliverer => _product.Deliverer;
+        public string Manufacturer => _product.Manufacturer;
+        public string ProductCategory => _product.ProductCategory;
         public double? CurrentDiscount => _product.CurrentDiscount;
         public int AmountStored => _product.AmountStored;
+        public string Description => _product.Description;
+        public string Image => _product.Image;
 
         public decimal? DiscountPrice
         {
@@ -31,7 +39,7 @@ namespace UP01.ViewModels
                     double difference = Cost * discount;
                     return (decimal?)(Cost - difference);
                 }
-                return null;
+                else return null;
             }
         }
 
@@ -55,7 +63,7 @@ namespace UP01.ViewModels
                 {
                     return TextDecorations.Strikethrough;
                 }
-                return null;
+                else return null;
             }
         }
 

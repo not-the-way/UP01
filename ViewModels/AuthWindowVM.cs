@@ -13,7 +13,7 @@ namespace UP01.ViewModels
 {
     public class AuthWindowVM : BaseViewModel
     {
-        public Users currentUser;
+        private Users currentUser;
 
         private string insertedLogin;
         private string insertedPassword;
@@ -72,6 +72,8 @@ namespace UP01.ViewModels
 
         void Login()
         {
+            currentUser = db.Users.Where(w => w.Login == insertedLogin && w.Password == insertedPassword).FirstOrDefault();
+
             if (currentUser == null)
             {
                 MessageBox.Show("Введите данные для авторизации!");
@@ -81,10 +83,11 @@ namespace UP01.ViewModels
                 if (currentUser.Login == insertedLogin && currentUser.Password == insertedPassword)
                 {
                     MainWindow main = new MainWindow();
+                    main.DataContext = new MainWindowVM(currentUser.FullName);
                     main.Show();
 
-                    AuthWindow auth = new AuthWindow();
-                    auth.Hide();
+                    var authWindow = Application.Current.Windows.OfType<AuthWindow>().FirstOrDefault();
+                    authWindow?.Close();
                 }
                 else
                 {
@@ -96,10 +99,11 @@ namespace UP01.ViewModels
         void GuestLogin()
         {
             MainWindow main = new MainWindow();
+            main.DataContext = new MainWindowVM("ГОСТЕВАЯ УЧЁТНАЯ ЗАПИСЬ");
             main.Show();
 
-            AuthWindow auth = new AuthWindow();
-            auth.Hide();
+            var authWindow = Application.Current.Windows.OfType<AuthWindow>().FirstOrDefault();
+            authWindow?.Close();
         }
     }
 }
