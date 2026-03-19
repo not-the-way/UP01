@@ -11,30 +11,66 @@ using UP01.ViewModels;
 
 namespace UP01.ViewModels
 {
-    internal class MainWindowVM : BaseViewModel
+    public class MainWindowVM : BaseViewModel
     {
         private ICommand _commandExit;
         private ICommand _commandAddProduct;
         private ICommand _commandEditProduct;
         private ICommand _commandDeleteProduct;
         private string _userFullName;
+        private string _userRole;
+        private bool _isAdmin;
         private IList<ProductDisplay> _products;
+        private ProductDisplay _selectedProduct;
 
-        public MainWindowVM(string userFullName)
+        public MainWindowVM(string userFullName, string userRole)
         {
             if (userFullName == string.Empty)
             {
                 UserFullName = "ГОСТЕВАЯ УЧЁТНАЯ ЗАПИСЬ";
+                UserRole = "Авторизованный клиент";
             }
             else
             {
                 UserFullName = userFullName;
+                UserRole = userRole;
+                IsAdmin = AdminPanelVisibility(UserRole);
             }
         }
 
         public MainWindowVM()
         {
 
+        }
+
+        ProductDisplay SelectedProduct
+        {
+            get { return _selectedProduct; }
+            set
+            {
+                _selectedProduct = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsAdmin
+        {
+            get => _isAdmin;
+            set
+            {
+                _isAdmin = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string UserRole
+        {
+            get => _userRole;
+            set
+            {
+                _userRole = value;
+                OnPropertyChanged();
+            }
         }
 
         public string UserFullName
@@ -47,7 +83,7 @@ namespace UP01.ViewModels
             }
         }
 
-        public IList<ProductDisplay> ProductsList
+        IList<ProductDisplay> ProductsList
         {
             get
             {
@@ -107,7 +143,7 @@ namespace UP01.ViewModels
 
         void DeleteProduct()
         {
-            // Пусто...
+            ProductsList.Remove(SelectedProduct);
         }
 
         void Exit()
@@ -117,6 +153,21 @@ namespace UP01.ViewModels
 
             auth.Show();
             main.Close();
+        }
+
+        bool AdminPanelVisibility(string userRole)
+        {
+            switch (userRole)
+            {
+                case "Авторизованный клиент":
+                    return false;
+                case "Менеджер":
+                    return false;
+                case "Администратор":
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }

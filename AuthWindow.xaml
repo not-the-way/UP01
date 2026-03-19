@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:UP01.ViewModels"
         xmlns:hlp="clr-namespace:UP01.Helpers"
         mc:Ignorable="d" Icon="/Images/icon.ico"
-        Title="AuthWindow" Height="500" Width="600">
+        Title="Авторизация" Height="500" Width="600">
 
     <Window.DataContext>
         <vm:AuthWindowVM/>

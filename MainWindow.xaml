@@ -11,6 +11,10 @@
     <Window.DataContext>
         <vm:MainWindowVM/>
     </Window.DataContext>
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="bx"/>
+    </Window.Resources>
     
     <Grid>
         <Grid.RowDefinitions>
@@ -40,7 +44,8 @@
                Style="{StaticResource MainLabelStyle}" FontSize="16"/>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1"
-                    Grid.ColumnSpan="3" Margin="10">
+                    Grid.ColumnSpan="3" Margin="10"
+                    Visibility="{Binding IsAdmin, Converter={StaticResource bx}}">
             <Button Style="{StaticResource MainButtonStyle}"
                     Content="Добавить товар"
                     HorizontalAlignment="Left"
@@ -72,7 +77,8 @@
                 CornerRadius="5" Background="Transparent"
                 BorderBrush="Black" Margin="5, 0" BorderThickness="1">
             <ListView x:Name="ItemListView" HorizontalContentAlignment="Stretch"
-                      ItemsSource="{Binding ProductsList}">
+                      ItemsSource="{Binding ProductsList}"
+                      SelectedItem="{Binding SelectedProduct}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border CornerRadius="5" Background="#F5DEB3" BorderBrush="Black"

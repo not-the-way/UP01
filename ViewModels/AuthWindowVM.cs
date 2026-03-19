@@ -83,7 +83,7 @@ namespace UP01.ViewModels
                 if (currentUser.Login == insertedLogin && currentUser.Password == insertedPassword)
                 {
                     MainWindow main = new MainWindow();
-                    main.DataContext = new MainWindowVM(currentUser.FullName);
+                    main.DataContext = new MainWindowVM(currentUser.FullName, currentUser.UserRole);
                     main.Show();
 
                     var authWindow = Application.Current.Windows.OfType<AuthWindow>().FirstOrDefault();
@@ -99,7 +99,7 @@ namespace UP01.ViewModels
         void GuestLogin()
         {
             MainWindow main = new MainWindow();
-            main.DataContext = new MainWindowVM("ГОСТЕВАЯ УЧЁТНАЯ ЗАПИСЬ");
+            main.DataContext = new MainWindowVM("ГОСТЕВАЯ УЧЁТНАЯ ЗАПИСЬ", "Авторизованный клиент");
             main.Show();
 
             var authWindow = Application.Current.Windows.OfType<AuthWindow>().FirstOrDefault();

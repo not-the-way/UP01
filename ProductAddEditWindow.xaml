@@ -4,11 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UP01"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Icon="/Images/icon.ico"
         Title="Окно добавления\изменения товара" Height="450" Width="800">
     <Grid>
         <Label Style="{StaticResource MainLabelStyle}" HorizontalAlignment="Center"
-               VerticalAlignment="Center" Content="Реализация здесь"
-               FontSize="50"/>
+               VerticalAlignment="Center" Content="Реализация добавления\изменения"
+               FontSize="40"/>
     </Grid>
 </Window>

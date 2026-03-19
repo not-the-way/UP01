@@ -8,7 +8,7 @@ using UP01.Models;
 
 namespace UP01.ViewModels
 {
-    internal class ProductDisplay : BaseViewModel
+    public class ProductDisplay : BaseViewModel
     {
         private Product _product;
 
